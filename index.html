@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labs-portfolio</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>朱</text></svg>">
+<style>
+  :root{
+    --bg:#0a0a0a;--card:#161616;--ink:#f0f0f0;--muted:#888;
+    --line:#2a2a2a;--accent:#8ab89a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(10,10,10,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1200px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-weight:700;font-size:15px;letter-spacing:.05em;text-decoration:none;color:var(--ink)}
+  .logo em{color:var(--accent);font-style:normal}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:.08em;transition:color .2s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links .num{color:var(--accent);margin-right:4px;font-size:11px}
+  header{position:relative;min-height:88vh;display:flex;align-items:center;background:var(--bg);overflow:hidden}
+  .hero-photo{position:absolute;right:0;top:0;bottom:0;width:60%;overflow:hidden}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;
+    -webkit-mask-image:linear-gradient(to left,black 20%,transparent 100%);
+    mask-image:linear-gradient(to left,black 20%,transparent 100%);}
+  .hero-inner{position:relative;z-index:2;width:100%;max-width:1200px;margin:0 auto;padding:140px 32px 80px}
+  .hero-tag{font-size:11px;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;margin-bottom:24px}
+  h1{font-size:clamp(60px,8vw,96px);font-weight:800;line-height:1;letter-spacing:-.02em;margin-bottom:20px;color:#fff}
+  .hero-keywords{font-size:14px;color:var(--muted);margin-bottom:40px;letter-spacing:.05em}
+  .hero-keywords span{color:var(--accent);margin:0 6px}
+  .hero-contact{display:flex;flex-direction:column;gap:12px;font-size:14px;color:var(--muted)}
+  .hero-contact a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s;font-size:15px}
+  .hero-contact a:hover{border-color:var(--accent)}
+  .hero-contact .label{color:var(--accent);font-weight:600;margin-right:10px;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+  .hero-contact span{color:var(--ink)}
+  section{max-width:1200px;margin:0 auto;padding:70px 32px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:44px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .sec-num{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.15em}
+  .sec-title{font-size:22px;font-weight:700;letter-spacing:-.01em;color:#fff}
+  .sec-desc{color:var(--muted);font-size:13px;margin-left:auto;text-align:right}
+  .cat-label{font-size:13px;font-weight:600;color:var(--ink);margin:36px 0 18px;padding-left:12px;border-left:3px solid var(--accent);letter-spacing:.05em}
+  .cat-label:first-of-type{margin-top:0}
+  .video-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  .video-card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:transform .2s,border-color .2s}
+  .video-card:hover{transform:translateY(-2px);border-color:#333}
+  .video-player{width:100%;aspect-ratio:16/9;background:#000;display:block}
+  .video-player video{width:100%;height:100%;display:block;object-fit:contain}
+  .video-info{padding:16px 20px}
+  .video-info h3{font-size:16px;font-weight:600;margin-bottom:4px;color:#fff}
+  .video-info p{font-size:12px;color:var(--muted);line-height:1.6}
+  .feature-row{display:grid;grid-template-columns:1fr 1.2fr;gap:32px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:28px;margin-bottom:20px;transition:border-color .2s}
+  .feature-row:hover{border-color:#333}
+  .feature-row .f-tag{font-size:10px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:12px;font-weight:600}
+  .feature-row h3{font-size:18px;font-weight:700;margin-bottom:10px;line-height:1.3;color:#fff}
+  .feature-row p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+  .feature-row .stats{font-size:14px;color:var(--accent);font-weight:600;margin-bottom:18px}
+  .feature-row .btn{display:inline-block;font-size:12px;color:var(--ink);border:1px solid var(--line);padding:8px 20px;border-radius:100px;text-decoration:none;transition:all .2s}
+  .feature-row .btn:hover{background:var(--accent);border-color:var(--accent);color:#0a0a0a}
+  .feature-row .cover{border-radius:8px;overflow:hidden;aspect-ratio:16/9}
+  .feature-row .cover img{width:100%;height:100%;object-fit:cover;display:block}
+  .photo-wall{position:relative;height:440px}
+  .photo-wall img{position:absolute;width:120px;aspect-ratio:3/4;object-fit:cover;border-radius:6px;transition:transform .3s ease,box-shadow .3s ease;cursor:zoom-in;display:block}
+  .photo-wall img:hover{transform:scale(2.2) !important;z-index:20;box-shadow:0 16px 48px rgba(0,0,0,.6)}
+  .photo-wall img:nth-child(1){top:5%;left:4%;transform:rotate(-3deg)}
+  .photo-wall img:nth-child(2){top:2%;left:19%;transform:rotate(2deg)}
+  .photo-wall img:nth-child(3){top:8%;left:34%;transform:rotate(-1deg)}
+  .photo-wall img:nth-child(4){top:3%;left:49%;transform:rotate(3deg)}
+  .photo-wall img:nth-child(5){top:6%;left:64%;transform:rotate(-2deg)}
+  .photo-wall img:nth-child(6){top:4%;left:79%;transform:rotate(1deg)}
+  .photo-wall img:nth-child(7){top:52%;left:2%;transform:rotate(2deg)}
+  .photo-wall img:nth-child(8){top:56%;left:16%;transform:rotate(-3deg)}
+  .photo-wall img:nth-child(9){top:50%;left:31%;transform:rotate(1deg)}
+  .photo-wall img:nth-child(10){top:54%;left:46%;transform:rotate(-2deg)}
+  .photo-wall img:nth-child(11){top:51%;left:61%;transform:rotate(3deg)}
+  .photo-wall img:nth-child(12){top:55%;left:76%;transform:rotate(-1deg)}
+  .photo-wall img:nth-child(13){top:53%;left:89%;transform:rotate(2deg)}
+  footer{border-top:1px solid var(--line);padding:40px 32px;margin-top:40px}
+  .foot-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .foot-inner .copy{font-size:13px;color:#666}
+  .foot-inner .to-top{font-size:13px;color:var(--ink);text-decoration:none;border-bottom:1px solid #444}
+  .foot-inner .to-top:hover{color:var(--accent);border-color:var(--accent)}
+  @media (max-width:900px){
+    .nav-links{display:none}
+    .hero-photo{width:100%;opacity:.2;mask-image:none;-webkit-mask-image:none}
+    header{min-height:auto}
+    .hero-inner{padding:120px 24px 60px}
+    section{padding:40px 24px}
+    .sec-desc{display:none}
+    .feature-row{grid-template-columns:1fr;gap:16px;padding:20px}
+    .feature-row .cover{order:-1}
+    .photo-wall{height:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .photo-wall img{position:static;width:100%;transform:none !important}
+    .photo-wall img:hover{transform:scale(1.1) !important}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">Labs<em>-</em>portfolio</a>
+    <ul class="nav-links">
+      <li><a href="#video"><span class="num">01</span>视频作品</a></li>
+      <li><a href="#project"><span class="num">02</span>策划项目</a></li>
+      <li><a href="#photo"><span class="num">03</span>摄影作品</a></li>
+      <li><a href="#social"><span class="num">04</span>内容精选</a></li>
+    </ul>
+  </div>
+</nav>
+<header>
+  <div class="hero-photo"><img src="assets/portrait.jpg" alt="朱静涵"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">PORTFOLIO · 2026</div>
+    <h1>朱静涵</h1>
+    <p class="hero-keywords">网络与新媒体 <span>·</span> 影像创作 <span>·</span> 内容策划 <span>·</span> 新媒体运营</p>
+    <div class="hero-contact">
+      <a href="mailto:jinghan8268@163.com"><span class="label">邮箱</span>jinghan8268@163.com</a>
+      <a href="tel:13545258946"><span class="label">电话</span>135 4525 8946</a>
+      <span><span class="label">坐标</span>武汉</span>
+    </div>
+  </div>
+</header>
+<section id="video">
+  <div class="sec-head">
+    <div class="sec-num">01 / VIDEO</div>
+    <h2 class="sec-title">视频作品</h2>
+    <p class="sec-desc">生成式影像实验与纪实短片</p>
+  </div>
+  <div class="cat-label">生成式影像</div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="video-player">
+        <video controls preload="metadata" poster="assets/silu.jpg">
+          <source src="videos/silu.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-info"><h3>丝路回响</h3><p>用 AI 重建敦煌壁画的呼吸感，让沉睡的线条在光线里重新流动。</p></div>
+    </div>
+    <div class="video-card">
+      <div class="video-player">
+        <video controls preload="metadata" poster="assets/bingmayong.jpg">
+          <source src="videos/bingmayong.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-info"><h3>兵马俑与多元文化的碰撞</h3><p>让陶俑在生成式影像里"活"过来，探索历史与多元文化的当代表达。</p></div>
+    </div>
+  </div>
+  <div class="cat-label">创作与纪实</div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="video-player">
+        <video controls preload="metadata" poster="assets/biye.jpg">
+          <source src="videos/biye.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-info"><h3>毕业宣传片</h3><p>负责内容创意、拍摄执行与后期剪辑，成片于毕业典礼现场播放。</p></div>
+    </div>
+    <div class="video-card">
+      <div class="video-player">
+        <video controls preload="metadata" poster="assets/guangdian.jpg">
+          <source src="videos/guangdian.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-info"><h3>人物访谈</h3><p>走进城市里的餐厅与主理人，记录真实的经营故事与生活温度。</p></div>
+    </div>
+    <div class="video-card">
+      <div class="video-player">
+        <video controls preload="metadata" poster="assets/daqiansai.jpg">
+          <source src="videos/daqiansai.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-info"><h3>大广赛 · 千问</h3><p>围绕品牌命题完成的创意短片，大广赛参赛作品。</p></div>
+    </div>
+  </div>
+</section>
+<section id="project">
+  <div class="sec-head">
+    <div class="sec-num">02 / PROJECT</div>
+    <h2 class="sec-title">策划项目</h2>
+    <p class="sec-desc">校园文创、电竞文旅、旅行产品方向</p>
+  </div>
+  <div class="feature-row">
+    <div>
+      <div class="f-tag">校园文创</div>
+      <h3>拓荒牛 · 校园文创快闪试点</h3>
+      <p>独立完成校园文化 IP"拓荒牛"的形象设计与视觉方案策划，延展系列文创产品方向。</p>
+      <a class="btn" href="pdf/tuohuangniu.pdf" target="_blank">阅读全案 →</a>
+    </div>
+    <div class="cover"><img src="assets/tuohuangniu.jpg" alt="拓荒牛"></div>
+  </div>
+  <div class="feature-row">
+    <div>
+      <div class="f-tag">电竞文旅</div>
+      <h3>电竞文旅融合策划案</h3>
+      <p>参与电竞赛事与文旅融合项目策划，负责活动方案设计、内容规划及前期筹备。</p>
+      <a class="btn" href="pdf/dianjing.pdf" target="_blank">阅读全案 →</a>
+    </div>
+    <div class="cover"><img src="assets/dianjing.jpg" alt="电竞文旅"></div>
+  </div>
+  <div class="feature-row">
+    <div>
+      <div class="f-tag">旅行产品</div>
+      <h3>趣程派 · Tripie</h3>
+      <p>旅行方向产品策划案，围绕年轻用户的出行场景与体验设计展开。</p>
+      <a class="btn" href="pdf/tripie.pdf" target="_blank">阅读全案 →</a>
+    </div>
+    <div class="cover"><img src="assets/tripie.jpg" alt="趣程派"></div>
+  </div>
+</section>
+<section id="photo">
+  <div class="sec-head">
+    <div class="sec-num">03 / PHOTOGRAPHY</div>
+    <h2 class="sec-title">摄影作品</h2>
+    <p class="sec-desc">人像习作，悬停放大查看</p>
+  </div>
+  <div class="photo-wall">
+    <img src="photos/IMG_20240316_201509.jpg" loading="lazy" alt="人像">
+    <img src="photos/IMG_20240915_223905.jpg" loading="lazy" alt="人像">
+    <img src="photos/IMG_20240915_225945.jpg" loading="lazy" alt="人像">
+    <img src="photos/IMG_20240916_112627.jpg" loading="lazy" alt="人像">
+    <img src="photos/IMG_20240928_000918.jpg" loading="lazy" alt="人像">
+    <img src="photos/IMG_20240928_081750.jpg" loading="lazy" alt="人像">
+    <img src="photos/IMG_20241030_234817.jpg" loading="lazy" alt="人像">
+    <img src="photos/IMG_20241030_234848.jpg" loading="lazy" alt="人像">
+    <img src="photos/IMG_20241101_140209.jpg" loading="lazy" alt="人像">
+    <img src="photos/IMG_20241101_143135.jpg" loading="lazy" alt="人像">
+    <img src="photos/mmexport1723468356718.jpg" loading="lazy" alt="人像">
+    <img src="photos/retouch_2024111113174579.jpg" loading="lazy" alt="人像">
+    <img src="photos/retouch_2024111113262209.jpg" loading="lazy" alt="人像">
+  </div>
+</section>
+<section id="social">
+  <div class="sec-head">
+    <div class="sec-num">04 / SOCIAL</div>
+    <h2 class="sec-title">内容精选</h2>
+    <p class="sec-desc">小红书 / B站持续更新，累计获赞收藏 6000+</p>
+  </div>
+  <div class="feature-row">
+    <div>
+      <div class="f-tag">小红书 · 爆款笔记</div>
+      <h3>溥丝躲在武大的角落偷偷哭</h3>
+      <p>校园随拍，记录武大角落里的安静瞬间。</p>
+      <div class="stats">单篇浏览 1.6w · 点赞收藏 800+</div>
+      <a class="btn" href="https://www.xiaohongshu.com/discovery/item/67c5d1d0000000002902f886?source=webshare&xhsshare=pc_web&xsec_token=ABjGJEkCjGsoE23d-y4MwRFji2i38q36b9Q9L5lFgpnec=&xsec_source=pc_share" target="_blank">阅读原文 →</a>
+    </div>
+    <div class="cover"><img src="assets/xhs_wuda.jpg" alt="武大涂鸦墙"></div>
+  </div>
+  <div class="feature-row">
+    <div>
+      <div class="f-tag">小红书</div>
+      <h3>而我愛你 你可要記得</h3>
+      <p>演唱会现场记录，用镜头留住舞台上的那束光。</p>
+      <div class="stats">单篇浏览 4000+ · 点赞收藏 300+</div>
+      <a class="btn" href="https://www.xiaohongshu.com/discovery/item/65ed3af30000000012021fbf?source=webshare&xhsshare=pc_web&xsec_token=ABz9dla9YgH8A72Q7YzgFvNB8KcJ1dBSZoS_HOZ9YGRBg=&xsec_source=pc_share" target="_blank">阅读原文 →</a>
+    </div>
+    <div class="cover"><img src="assets/xhs_love.jpg" alt="演唱会"></div>
+  </div>
+  <div class="feature-row">
+    <div>
+      <div class="f-tag">BILIBILI · 年度总结</div>
+      <h3>2023年终总结｜原来绝境之后是前所未有的自由</h3>
+      <p>个人年度影像总结，把这一年走过的路剪进一支片子里。</p>
+      <a class="btn" href="https://www.bilibili.com/video/BV1Fg4y1y7cA/" target="_blank">观看原片 →</a>
+    </div>
+    <div class="cover"><img src="assets/bili_2023.jpg" alt="B站年度总结"></div>
+  </div>
+</section>
+<footer>
+  <div class="foot-inner">
+    <div class="copy">© 2026 朱静涵 · Labs · 武汉</div>
+    <a class="to-top" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">回到顶部 ↑</a>
+  </div>
+</footer>
+</body>
+</html>
